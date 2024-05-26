@@ -3,6 +3,9 @@ package com.example.coffeehouse.CoffeeHouse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +23,8 @@ public class CoffeeHouseService
 
     public CoffeeHouse createCoffeeHouse(CoffeeHouse coffeeHouse)
     {
+        LocalDate dateCreated = LocalDate.now();
+        coffeeHouse.setDateCreated(dateCreated);
         return coffeeHouseRepository.save(coffeeHouse);
     }
 
