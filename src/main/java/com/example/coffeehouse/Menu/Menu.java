@@ -9,16 +9,19 @@ public class Menu
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long m_id;
+    private Long menuId;
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "coffeehouse_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "coffeehouse_id")
     private CoffeeHouse coffeeHouse;
 
-    public Menu(Long m_id, String name, CoffeeHouse coffeeHouse)
+    //constructors, getters, setters
+
+
+    public Menu(Long menuId, String name, CoffeeHouse coffeeHouse)
     {
-        this.m_id = m_id;
+        this.menuId = menuId;
         this.name = name;
         this.coffeeHouse = coffeeHouse;
     }
@@ -34,14 +37,14 @@ public class Menu
 
     }
 
-    public Long getM_id()
+    public Long getMenuId()
     {
-        return m_id;
+        return menuId;
     }
 
-    public void setM_id(Long id)
+    public void setMenuId(Long menuId)
     {
-        this.m_id = m_id;
+        this.menuId = menuId;
     }
 
     public String getName()
@@ -63,4 +66,6 @@ public class Menu
     {
         this.coffeeHouse = coffeeHouse;
     }
+
+    
 }

@@ -1,10 +1,9 @@
 package com.example.coffeehouse.Menu;
 
+import com.example.coffeehouse.CoffeeHouse.CoffeeHouse;
+import com.example.coffeehouse.CoffeeHouse.CoffeeHouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
 
@@ -14,28 +13,26 @@ public class MenuService
     @Autowired
     private MenuRepository menuRepository;
 
-    public Optional<Menu> getMenu(Long id, Long m_id)
-    {
-        return menuRepository.findByIdAndCoffeeHouseId(id, m_id);
-    }
+    @Autowired
+    private CoffeeHouseRepository coffeeHouseRepository;
 
-    public Menu updateMenu(Long id, Menu updatedMenu)
-    {
-        Optional<Menu> existingMenu = menuRepository.findById(id);
 
-        if(existingMenu.isPresent())
+    public Menu createMenu(Long coffeeHouseId, Menu menu)
+    {
+        Optional<CoffeeHouse> coffeeHouseOptional = coffeeHouseRepository.findById(coffeeHouseId);
+
+        if (coffeeHouseOptional.isPresent())
         {
-            Menu menu = existingMenu.get();
+            CoffeeHouse coffeeHouse = coffeeHouseOptional.get();
+            menu.setCoffeeHouse(coffeeHouse);
+            menu = menuRepository.save(menu);
 
-            menu.setName(updatedMenu.getName());
-            menu.setCoffeeHouse(updatedMenu.getCoffeeHouse());
+            // Set the coffeeHouse reference to null to prevent loop
+            coffeeHouse.getMenus().add(menu);
+            return menu;
+        } else
+        {
+            throw new RuntimeException("CoffeeHouse with id " + coffeeHouseId + " not found");
         }
-
-        return updatedMenu;
-    }
-
-    public Menu addMenu(Menu menu)
-    {
-        return menuRepository.save(menu);
     }
 }

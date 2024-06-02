@@ -1,20 +1,23 @@
 package com.example.coffeehouse.CoffeeHouse;
 
+import com.example.coffeehouse.Menu.Menu;
+import com.example.coffeehouse.Menu.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 
 @Service
 public class CoffeeHouseService
 {
     @Autowired
     private CoffeeHouseRepository coffeeHouseRepository;
+
+    @Autowired
+    private MenuRepository menuRepository;
+
 
     public List<CoffeeHouse> getAllCoffeeHouses()
     {
@@ -23,19 +26,19 @@ public class CoffeeHouseService
 
     public CoffeeHouse createCoffeeHouse(CoffeeHouse coffeeHouse)
     {
-        LocalDate dateCreated = LocalDate.now();
-        coffeeHouse.setDateCreated(dateCreated);
+        LocalDate currDate = LocalDate.now();
+        coffeeHouse.setDateCreated(currDate);
         return coffeeHouseRepository.save(coffeeHouse);
     }
 
-    public Optional<CoffeeHouse> getASpecificCoffeeHouse(Long id)
+    public Optional<CoffeeHouse> getASpecificCoffeeHouse(Long coffeeHouseId)
     {
-        return coffeeHouseRepository.findById(id);
+        return coffeeHouseRepository.findById(coffeeHouseId);
     }
 
-    public CoffeeHouse updateTheCoffeeHouse(Long id, CoffeeHouse updatedCoffeeHouse)
+    public CoffeeHouse updateTheCoffeeHouse(Long coffeeHouseId, CoffeeHouse updatedCoffeeHouse)
     {
-        Optional<CoffeeHouse> existingCoffeeHouse = coffeeHouseRepository.findById(id).stream().findFirst();
+        Optional<CoffeeHouse> existingCoffeeHouse = coffeeHouseRepository.findById(coffeeHouseId).stream().findFirst();
 
         if(existingCoffeeHouse.isPresent())
         {
@@ -50,21 +53,35 @@ public class CoffeeHouseService
         }
         else
         {
-            throw new RuntimeException("CoffeeHouse with id " + id + " not found");
+            throw new RuntimeException("CoffeeHouse with id " + coffeeHouseId + " not found");
         }
 
         return updatedCoffeeHouse;
     }
 
-    public Optional<CoffeeHouse> deleteTheCoffeeHouse(Long id)
+    public Optional<CoffeeHouse> deleteTheCoffeeHouse(Long coffeeHouseId)
     {
-        Optional<CoffeeHouse> coffeeHouse = coffeeHouseRepository.findById(id);
+        Optional<CoffeeHouse> coffeeHouse = coffeeHouseRepository.findById(coffeeHouseId);
 
         if(coffeeHouse.isPresent())
         {
-            coffeeHouseRepository.deleteById(id);
+            coffeeHouseRepository.deleteById(coffeeHouseId);
         }
 
         return coffeeHouse;
+    }
+
+    public Optional<Menu> getMenuByCoffeeHouse(Long coffeeHouseId, Long menuId)
+    {
+        Optional<CoffeeHouse> coffeeHouse = coffeeHouseRepository.findById(coffeeHouseId);
+
+        if(coffeeHouse.isPresent())
+        {
+            return menuRepository.findByMenuIdAndCoffeeHouse(menuId, coffeeHouse.get());
+        }
+        else
+        {
+            return Optional.empty();
+        }
     }
 }
