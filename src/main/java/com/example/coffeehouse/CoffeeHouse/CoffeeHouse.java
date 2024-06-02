@@ -1,15 +1,19 @@
 package com.example.coffeehouse.CoffeeHouse;
 
+import com.example.coffeehouse.Menu.Menu;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "coffeehouse")
 public class CoffeeHouse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long coffeeHouseId;
     private String name;
     private String schedule;
     @Column(name = "date_created")
@@ -17,9 +21,15 @@ public class CoffeeHouse {
     @Column(columnDefinition = "TEXT")
     private String info;
 
-    public CoffeeHouse(Long id, String name, String schedule, LocalDate dateCreated, String info)
+    @OneToMany(mappedBy = "coffeeHouse")
+    @JsonBackReference
+    private Set<Menu> menus;
+
+    //constructors, getters, setters
+
+    public CoffeeHouse(Long coffeeHouseId, String name, String schedule, LocalDate dateCreated, String info)
     {
-        this.id = id;
+        this.coffeeHouseId = coffeeHouseId;
         this.name = name;
         this.schedule = schedule;
         this.dateCreated = dateCreated;
@@ -39,14 +49,14 @@ public class CoffeeHouse {
 
     }
 
-    public Long getId()
+    public Long getCoffeeHouseId()
     {
-        return id;
+        return coffeeHouseId;
     }
 
-    public void setId(Long id)
+    public void setCoffeeHouseId(Long coffeeHouseId)
     {
-        this.id = id;
+        this.coffeeHouseId = coffeeHouseId;
     }
 
     public String getName()
@@ -87,5 +97,15 @@ public class CoffeeHouse {
     public void setInfo(String info)
     {
         this.info = info;
+    }
+
+    public Set<Menu> getMenus()
+    {
+        return menus;
+    }
+
+    public void setMenus(Set<Menu> menus)
+    {
+        this.menus = menus;
     }
 }
