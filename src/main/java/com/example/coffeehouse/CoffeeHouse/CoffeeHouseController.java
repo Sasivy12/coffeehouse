@@ -31,7 +31,7 @@ public class CoffeeHouseController
         return coffeeHouseService.createCoffeeHouse(coffeeHouse);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{coffeeHouseId}")
     public Optional<CoffeeHouse> getASpecificCoffeeHouse(@PathVariable Long coffeeHouseId)
     {
         return coffeeHouseService.getASpecificCoffeeHouse(coffeeHouseId);
@@ -56,8 +56,21 @@ public class CoffeeHouseController
     }
 
     @PostMapping("/{coffeeHouseId}/menus")
-    public Menu createMenu(@PathVariable Long coffeeHouseId, @RequestBody Menu menu) {
+    public Menu createMenu(@PathVariable Long coffeeHouseId, @RequestBody Menu menu)
+    {
         return menuService.createMenu(coffeeHouseId, menu);
-
     }
+
+    @DeleteMapping("/{coffeeHouseId}/edit/{menuId}")
+    public Menu deleteMenu(@PathVariable Long coffeeHouseId, @PathVariable Long menuId)
+    {
+        return menuService.deleteMenu(coffeeHouseId, menuId);
+    }
+
+    @PutMapping("/{coffeeHouseId}/edit/{menuId}")
+    public Menu updateMenu(@PathVariable Long coffeeHouseId, @PathVariable Long menuId, @RequestBody Menu updatedMenu)
+    {
+        return menuService.updateMenu(coffeeHouseId, menuId, updatedMenu);
+    }
+
 }

@@ -18,7 +18,6 @@ public class Menu
 
     //constructors, getters, setters
 
-
     public Menu(Long menuId, String name, CoffeeHouse coffeeHouse)
     {
         this.menuId = menuId;

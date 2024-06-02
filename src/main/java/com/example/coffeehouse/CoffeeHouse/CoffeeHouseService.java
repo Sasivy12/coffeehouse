@@ -18,7 +18,6 @@ public class CoffeeHouseService
     @Autowired
     private MenuRepository menuRepository;
 
-
     public List<CoffeeHouse> getAllCoffeeHouses()
     {
         return coffeeHouseRepository.findAll();
@@ -84,4 +83,5 @@ public class CoffeeHouseService
             return Optional.empty();
         }
     }
+
 }
