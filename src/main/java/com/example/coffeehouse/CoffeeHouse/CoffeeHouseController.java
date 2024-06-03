@@ -89,4 +89,10 @@ public class CoffeeHouseController
     {
         return menuItemService.createMenuItem(coffeeHouseId, menuId, menuItem);
     }
+
+    @DeleteMapping("/{coffeeHouseId}/menu/{menuId}/items/{menuItemId}/edit")
+    public MenuItem deleteMenuItem(@PathVariable Long coffeeHouseId, @PathVariable Long menuId,@PathVariable Long menuItemId)
+    {
+        return menuItemService.deleteMenuItem(coffeeHouseId, menuId, menuItemId);
+    }
 }

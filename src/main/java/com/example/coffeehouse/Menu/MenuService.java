@@ -57,7 +57,8 @@ public class MenuService
                 if (menu.getCoffeeHouse().equals(coffeeHouse))
                 {
                     menuRepository.delete(menu);
-                } else
+                }
+                else
                 {
                     throw new IllegalArgumentException("Menu with ID " + menuId + " does not belong to CoffeeHouse with ID " + coffeeHouseId);
                 }
