@@ -48,7 +48,7 @@ public class CoffeeHouseController
         return coffeeHouseService.updateTheCoffeeHouse(coffeeHouseId, updatedCoffeeHouse);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{coffeeHouseId}/edit")
     public Optional<CoffeeHouse> deleteTheCoffeeHouse(@PathVariable Long coffeeHouseId)
     {
         return coffeeHouseService.deleteTheCoffeeHouse(coffeeHouseId);
