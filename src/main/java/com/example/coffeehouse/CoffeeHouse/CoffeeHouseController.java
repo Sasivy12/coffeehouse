@@ -42,13 +42,13 @@ public class CoffeeHouseController
         return coffeeHouseService.getASpecificCoffeeHouse(coffeeHouseId);
     }
 
-    @PutMapping("/{id}/edit")
+    @PutMapping("/{coffeeHouseId}/edit")
     public CoffeeHouse updateTheCoffeeHouse(@PathVariable Long coffeeHouseId, @RequestBody CoffeeHouse updatedCoffeeHouse)
     {
         return coffeeHouseService.updateTheCoffeeHouse(coffeeHouseId, updatedCoffeeHouse);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{coffeeHouseId}/edit")
     public Optional<CoffeeHouse> deleteTheCoffeeHouse(@PathVariable Long coffeeHouseId)
     {
         return coffeeHouseService.deleteTheCoffeeHouse(coffeeHouseId);
