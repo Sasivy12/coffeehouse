@@ -2,6 +2,8 @@ package com.example.coffeehouse.Menu;
 
 import com.example.coffeehouse.CoffeeHouse.CoffeeHouse;
 import com.example.coffeehouse.CoffeeHouse.CoffeeHouseRepository;
+import com.example.coffeehouse.MenuItem.MenuItem;
+import com.example.coffeehouse.MenuItem.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ public class MenuService
     @Autowired
     private CoffeeHouseRepository coffeeHouseRepository;
 
+    @Autowired
+    private MenuItemRepository menuItemRepository;
+
     public Menu createMenu(Long coffeeHouseId, Menu menu)
     {
         Optional<CoffeeHouse> coffeeHouseOptional = coffeeHouseRepository.findById(coffeeHouseId);
@@ -29,7 +34,8 @@ public class MenuService
             // Set the coffeeHouse reference to null to prevent loop
             coffeeHouse.getMenus().add(menu);
             return menu;
-        } else
+        }
+        else
         {
             throw new RuntimeException("CoffeeHouse with id " + coffeeHouseId + " not found");
         }
@@ -51,7 +57,8 @@ public class MenuService
                 if (menu.getCoffeeHouse().equals(coffeeHouse))
                 {
                     menuRepository.delete(menu);
-                } else
+                }
+                else
                 {
                     throw new IllegalArgumentException("Menu with ID " + menuId + " does not belong to CoffeeHouse with ID " + coffeeHouseId);
                 }
@@ -84,4 +91,6 @@ public class MenuService
         }
         return updatedMenu;
     }
+
+
 }
