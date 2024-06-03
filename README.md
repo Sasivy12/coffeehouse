@@ -60,8 +60,8 @@
 `localhost:8000/api/{coffeeHouseId}/menu/{menuId}/items/add`
 
 `GET` Возвращает информацию о конкретном пункте меню по его уникальному идентификатору.
-`localhost:8000/api//{coffeeHouseId}/menu/{menuId}/items/{menuItemId}`
+`localhost:8000/api/{coffeeHouseId}/menu/{menuId}/items/{menuItemId}`
 
 `PUT`, `DELETE` Изменяет или удаляет информацию о конкретном пункте меню по его уникальному идентификатору.
-`localhost:8000/api//{coffeeHouseId}/menu/{menuId}/items/{menuItemId}/edit`
+`localhost:8000/api/{coffeeHouseId}/menu/{menuId}/items/{menuItemId}/edit`
 
