@@ -2,6 +2,8 @@ package com.example.coffeehouse.CoffeeHouse;
 
 import com.example.coffeehouse.Menu.Menu;
 import com.example.coffeehouse.Menu.MenuRepository;
+import com.example.coffeehouse.MenuItem.MenuItem;
+import com.example.coffeehouse.MenuItem.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class CoffeeHouseService
 
     @Autowired
     private MenuRepository menuRepository;
+
+    @Autowired
+    private MenuItemRepository menuItemRepository;
 
     public List<CoffeeHouse> getAllCoffeeHouses()
     {
@@ -77,6 +82,28 @@ public class CoffeeHouseService
         if(coffeeHouse.isPresent())
         {
             return menuRepository.findByMenuIdAndCoffeeHouse(menuId, coffeeHouse.get());
+        }
+        else
+        {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<MenuItem> getMenuItem(Long coffeeHouseId, Long menuId,Long menuItemId)
+    {
+        Optional<CoffeeHouse> coffeeHouse = coffeeHouseRepository.findById(coffeeHouseId);
+
+        if(coffeeHouse.isPresent())
+        {
+            Optional<Menu> menu = menuRepository.findById(menuId);
+            if(menu.isPresent())
+            {
+                return menuItemRepository.findByMenuItemIdAndMenuAndMenuCoffeeHouse(menuItemId, menu.get(), coffeeHouse.get());
+            }
+            else
+            {
+                return Optional.empty();
+            }
         }
         else
         {

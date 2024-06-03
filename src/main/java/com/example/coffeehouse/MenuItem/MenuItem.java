@@ -13,6 +13,8 @@ public class MenuItem
     private String name;
     private String measure_unit;
     private Integer units;
+
+    @Lob
     private byte[] image;
 
     @ManyToOne

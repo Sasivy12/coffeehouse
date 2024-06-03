@@ -2,6 +2,7 @@ package com.example.coffeehouse.CoffeeHouse;
 
 import com.example.coffeehouse.Menu.Menu;
 import com.example.coffeehouse.Menu.MenuService;
+import com.example.coffeehouse.MenuItem.MenuItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,5 +73,12 @@ public class CoffeeHouseController
     {
         return menuService.updateMenu(coffeeHouseId, menuId, updatedMenu);
     }
+
+    @GetMapping("/{coffeeHouseId}/menu/{menuId}/items/{menuItemId}")
+    public Optional<MenuItem> getMenuItem(@PathVariable Long coffeeHouseId, @PathVariable Long menuId, @PathVariable Long menuItemId)
+    {
+        return coffeeHouseService.getMenuItem(coffeeHouseId, menuId, menuItemId);
+    }
+
 
 }
