@@ -95,4 +95,10 @@ public class CoffeeHouseController
     {
         return menuItemService.deleteMenuItem(coffeeHouseId, menuId, menuItemId);
     }
+
+    @PostMapping("/{coffeeHouseId}/menu/{menuId}/items/{menuItemId}/edit")
+    public MenuItem updateMenuItem(@PathVariable Long coffeeHouseId, @PathVariable Long menuId,@PathVariable Long menuItemId, @RequestBody MenuItem updatedMenuItem)
+    {
+        return menuItemService.updateMenuItem(coffeeHouseId, menuId, menuItemId, updatedMenuItem);
+    }
 }

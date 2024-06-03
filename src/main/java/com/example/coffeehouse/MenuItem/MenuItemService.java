@@ -92,14 +92,74 @@ public class MenuItemService
                 {
                     throw new RuntimeException("Menu does not belong to the specified CoffeeHouse");
                 }
-            } else
+            }
+            else
             {
                 throw new RuntimeException("Menu with id " + menuId + " not found");
             }
-        } else
+        }
+        else
         {
             throw new RuntimeException("CoffeeHouse with id " + coffeeHouseId + " not found");
         }
+    }
+
+    public MenuItem updateMenuItem(Long coffeeHouseId, Long menuId, Long menuItemId, MenuItem updatedMenuItem)
+    {
+        Optional<CoffeeHouse> coffeeHouseOptional = coffeeHouseRepository.findById(coffeeHouseId);
+
+        if (coffeeHouseOptional.isPresent())
+        {
+            CoffeeHouse coffeeHouse = coffeeHouseOptional.get();
+            Optional<Menu> menuOptional = menuRepository.findById(menuId);
+
+            if (menuOptional.isPresent())
+            {
+                Menu menu = menuOptional.get();
+
+                if (menu.getCoffeeHouse().equals(coffeeHouse))
+                {
+                    Optional<MenuItem> menuItemOptional = menuItemRepository.findById(menuItemId);
+
+                    if (menuItemOptional.isPresent())
+                    {
+                        MenuItem menuItem = menuItemOptional.get();
+
+                        if (menuItem.getMenu().equals(menu))
+                        {
+                            menuItem.setName(updatedMenuItem.getName());
+                            menuItem.setUnits(updatedMenuItem.getUnits());
+                            menuItem.setMeasure_unit(updatedMenuItem.getMeasure_unit());
+                            menuItem.setImage(updatedMenuItem.getImage());
+
+                            menuItemRepository.save(menuItem);
+                        }
+                        else
+                        {
+                            throw new RuntimeException("MenuItem does not belong to the specified Menu");
+                        }
+                    }
+                    else
+                    {
+                        throw new RuntimeException("MenuItem with id " + menuItemId + " not found");
+                    }
+                }
+                else
+                {
+                    throw new RuntimeException("Menu does not belong to the specified CoffeeHouse");
+                }
+            }
+            else
+            {
+                throw new RuntimeException("Menu with id " + menuId + " not found");
+            }
+        }
+        else
+        {
+            throw new RuntimeException("CoffeeHouse with id " + coffeeHouseId + " not found");
+        }
+
+        return updatedMenuItem;
     }
 
 }
