@@ -1,6 +1,7 @@
 package com.example.coffeehouse.MenuItem;
 
 import com.example.coffeehouse.Menu.Menu;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,6 +20,7 @@ public class MenuItem
 
     @ManyToOne
     @JoinColumn(name = "menu_id")
+    @JsonBackReference
     private com.example.coffeehouse.Menu.Menu menu;
 
     public MenuItem(Long menuItemId, String name, String measure_unit, Integer units, byte[] image, Menu menu)

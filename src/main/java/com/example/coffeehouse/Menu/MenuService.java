@@ -34,7 +34,8 @@ public class MenuService
             // Set the coffeeHouse reference to null to prevent loop
             coffeeHouse.getMenus().add(menu);
             return menu;
-        } else
+        }
+        else
         {
             throw new RuntimeException("CoffeeHouse with id " + coffeeHouseId + " not found");
         }

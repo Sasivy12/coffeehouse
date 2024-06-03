@@ -3,6 +3,7 @@ package com.example.coffeehouse.CoffeeHouse;
 import com.example.coffeehouse.Menu.Menu;
 import com.example.coffeehouse.Menu.MenuService;
 import com.example.coffeehouse.MenuItem.MenuItem;
+import com.example.coffeehouse.MenuItem.MenuItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,9 @@ public class CoffeeHouseController
 
     @Autowired
     private MenuService menuService;
+
+    @Autowired
+    private MenuItemService menuItemService;
 
 
     @GetMapping("/")
@@ -56,7 +60,7 @@ public class CoffeeHouseController
         return coffeeHouseService.getMenuByCoffeeHouse(coffeeHouseId, menuId);
     }
 
-    @PostMapping("/{coffeeHouseId}/menus")
+    @PostMapping("/{coffeeHouseId}/menu/add")
     public Menu createMenu(@PathVariable Long coffeeHouseId, @RequestBody Menu menu)
     {
         return menuService.createMenu(coffeeHouseId, menu);
@@ -80,5 +84,9 @@ public class CoffeeHouseController
         return coffeeHouseService.getMenuItem(coffeeHouseId, menuId, menuItemId);
     }
 
-
+    @PostMapping("/{coffeeHouseId}/menu/{menuId}/items/add")
+    public MenuItem createMenuItem(@PathVariable Long coffeeHouseId, @PathVariable Long menuId, @RequestBody MenuItem menuItem)
+    {
+        return menuItemService.createMenuItem(coffeeHouseId, menuId, menuItem);
+    }
 }
